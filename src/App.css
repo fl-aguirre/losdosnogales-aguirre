@@ -1,5 +1,23 @@
-.App {
+.title__container {
+  margin: 50px;
+}
+
+.title {
   text-align: center;
+  font-size: 30px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-evenly;
+  background-color:#fbfbdc;
+  height: 150px;
+  font-weight: bolder;
+  color: #57825c;
+}
+
+.navbar img {
+  width: 150px;
 }
 
 .App-logo {

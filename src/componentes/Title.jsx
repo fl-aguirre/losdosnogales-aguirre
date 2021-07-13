@@ -1,7 +1,6 @@
 import React from 'react'
 
-function Titulo({nombre, funcionCallBack}) { //Funcion hijo
-    console.log(nombre)
+function Titulo({nombre}) { //Funcion hijo
     return (
         <div className="title__container">
             <h1 className="title">{nombre}</h1>

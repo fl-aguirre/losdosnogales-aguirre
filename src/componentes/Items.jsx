@@ -2,7 +2,6 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';    
 
 const Items = ({productos, greeting})=> {
-    console.log(productos)
     return productos.map((producto) => (
         <CardProduct 
             producto={producto}
@@ -28,7 +27,6 @@ const CardProduct = ({producto, greeting})=> {
         </Card>
     )
 }
-
 
 
 export default Items

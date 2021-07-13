@@ -13,14 +13,14 @@ function NavBar({alerta}) {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="#features" onClick={alerta} className="navbar__font">Home</Nav.Link>
-            <Nav.Link href="#pricing" onClick={alerta}>Sobre nosotros</Nav.Link>
+            <Nav.Link href="#home" onClick={alerta} className="navbar__font">Home</Nav.Link>
+            <Nav.Link href="#sobrenosotros" onClick={alerta}>Sobre nosotros</Nav.Link>
             <NavDropdown title="Productos" id="collasible-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1" onClick={alerta}>Nueces</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2" onClick={alerta}>Aceitunas</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3" onClick={alerta}>Dulces</NavDropdown.Item>
+              <NavDropdown.Item href="#nueces" onClick={alerta}>Nueces</NavDropdown.Item>
+              <NavDropdown.Item href="#aceitunas" onClick={alerta}>Aceitunas</NavDropdown.Item>
+              <NavDropdown.Item href="#dulces" onClick={alerta}>Dulces</NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link href="#deets" onClick={alerta}>Contáctenos</Nav.Link>
+            <Nav.Link href="#contacto" onClick={alerta}>Contáctenos</Nav.Link>
           </Nav>
           <CartWidget alerta={alerta}/>
         </Navbar.Collapse>

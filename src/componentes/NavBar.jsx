@@ -8,7 +8,7 @@ function NavBar({alerta}) {
     return (
         <Navbar collapseOnSelect expand="lg" className="navbar">
         <Navbar.Brand href="#home">
-            <img src={logo} />
+            <img src={logo} alt="logo"/>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">

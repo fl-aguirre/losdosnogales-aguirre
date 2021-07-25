@@ -1,11 +1,9 @@
-import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import ItemCount from './ItemCount';
 
-function ItemDetail({itemDetail, onAdd, onSub, addCart, quantity}) {
+function ItemDetail({itemDetail, addCart}) {
     
-    //Calcular precio total de acuerdo a la cantidad
-    let priceTotal = quantity * itemDetail.price 
 
     //Renderiza el item con sus detalles
     return (
@@ -15,13 +13,11 @@ function ItemDetail({itemDetail, onAdd, onSub, addCart, quantity}) {
                 <Card.Title>{itemDetail.name}</Card.Title>
                 <Card.Text>
                     Descripción: {itemDetail.description}<br/>
-                    <strong>Precio por cantidad: {priceTotal}</strong>
+                    <strong>Precio: {itemDetail.price}</strong>
                 </Card.Text>
-                <div className="mb-3">
-                    <Button size="sm" onClick={onAdd}>+</Button>
-                    <Button size="sm" onClick={onSub}>-</Button>
-                    <span> Cantidad: {quantity}</span><br/>
-                </div>
+                <ItemCount
+                    itemDetail={itemDetail}
+                />
                 <Button size="sm" onClick={addCart}>Agregar al carrito</Button>
             </Card.Body>
         </Card>

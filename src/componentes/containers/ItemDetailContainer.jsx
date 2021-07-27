@@ -1,9 +1,13 @@
 import {useState, useEffect} from "react";
-import ItemDetail from "./ItemDetail";
-import {getItem} from "../getMocks";
+import {useParams} from 'react-router-dom';
+import ItemDetail from "../ItemDetail";
+import {getItem} from "../../getMocks";
 
 
 function ItemDetailContainer() {
+
+    const {detailId} = useParams()
+    console.log(detailId)
 
     const [itemDetail, setItemDetail] = useState({})
 
@@ -11,11 +15,12 @@ function ItemDetailContainer() {
     useEffect(() => {
         getItem()
             .then((respuesta)=>{
-                setItemDetail(respuesta.find( e => e.id === 1))
-                console.log(respuesta)
+                setItemDetail(respuesta.filter( item => item.id === parseInt(detailId)))
             },error => console.log(error))
             .catch(error => console.log('Un error:' + error))
-    }, [])
+    }, [detailId])
+
+    console.log(itemDetail)
 
     //Función para agregar al carrito
     const addCart = () => {
@@ -23,7 +28,7 @@ function ItemDetailContainer() {
     }
 
     //Renderiza el Item Detail con sus props (estados y funciones)
-    console.log(itemDetail)
+
     if (Object.keys(itemDetail).length === 0){
         return null
     }else {

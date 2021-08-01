@@ -22,11 +22,6 @@ function ItemDetailContainer() {
 
     console.log(itemDetail)
 
-    //Función para agregar al carrito
-    const addCart = () => {
-        alert('Has agregado un producto!')
-    }
-
     //Renderiza el Item Detail con sus props (estados y funciones)
 
     if (Object.keys(itemDetail).length === 0){
@@ -35,7 +30,6 @@ function ItemDetailContainer() {
         return (
             <ItemDetail
                 itemDetail = {itemDetail}
-                addCart = {addCart}
             />
         )
     }

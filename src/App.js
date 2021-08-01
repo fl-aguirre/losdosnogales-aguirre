@@ -1,3 +1,4 @@
+// import {useState, useEffect} from "react";
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -14,8 +15,8 @@ function App() {
         <Router>
             <NavBar/>
             <Title/>
+            <div>
             <Switch>
-                <div>
                     <Route exact path="/">
                         <ItemListContainer/>
                     </Route>
@@ -24,8 +25,8 @@ function App() {
                     </Route>
                     <Route exact path="/item/:detailId" component={ItemDetailContainer}/>
                     <Route exact path="/cart" component={Cart} />
-                </div>
             </Switch>
+            </div>
         </Router>
     );
     }

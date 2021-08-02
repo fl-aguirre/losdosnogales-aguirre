@@ -21,13 +21,6 @@ function ItemDetail({itemDetail}) {
         setEvent(1)
     }
 
-    //Función botón "Terminar compra"
-    const Comprar = () => {
-        return(
-            <Button as={Link} size="sm" to="/cart">Terminar compra</Button>
-        )
-    }
-
     //Renderiza el item con sus detalles
     return itemDetail.map((item) => (
         <Card style={{ width: '30rem' }} className="mx-auto mt-5" key={'itemDetail'+ item.id}>
@@ -50,7 +43,7 @@ function ItemDetail({itemDetail}) {
                         /> 
                     </>:
                     <> 
-                        <Comprar />
+                        <Button as={Link} size="sm" to="/cart">Terminar compra</Button>
                     </>
                 }
             </Card.Body>

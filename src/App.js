@@ -1,4 +1,4 @@
-// import {useState, useEffect} from "react";
+import {useState, useEffect, createContext} from "react";
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -7,7 +7,9 @@ import Title from './componentes/Title';
 import ItemListContainer from './componentes/containers/ItemListContainer';
 import ItemDetailContainer from './componentes/containers/ItemDetailContainer';
 import Cart from './componentes/Cart';
+import CartContext from './componentes/context/cartContext';
 
+const ItemContext = createContext()
 
 function App() {
 

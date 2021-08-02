@@ -8,40 +8,17 @@ function ItemDetail({itemDetail}) {
     
     console.log(itemDetail)
 
-    const [quantity, setQuantity] = useState(1);
+    //Estado de la cantidad
+    const [quantity, setQuantity] = useState(0);
 
-    //Función para agregar cantidad (guarda en estado "quantity")
-    const onAdd = () => {
-        setQuantity(quantity + 1)
-        if (quantity === itemDetail.stock) {
-            setQuantity(itemDetail.stock)
-            alert("No hay más stock!")
-        }
-    }
+    //Estado del evento "click"
+    const [event, setEvent] = useState(0)
 
-    //Función para quitar cantidad (guarda en estado "quantity")
-    const onSub = () => {
-        setQuantity(quantity - 1)
-        if (quantity === 1) {
-            setQuantity(1)
-        }
-    }
-
-    //Guardar el evento "click" en un estado
-    const [event, setEvent] = useState('none')
-
-    //Función para capturar el evento que agrega al carrito
-    const addCart = (e) => {
+    //Función para guardar el contador (count) en el estado de cantidad (quantity) y el evento click
+    const onAdd = (qy) =>{
+        setQuantity(qy)
         alert('Has agregado un producto!')
-        console.log(e.type)
-        setEvent(e.type)
-    }
-
-    //Función botón "Agregar al carrito"
-    const Agregar = () => {
-        return(
-            <Button size="sm" onClick={addCart}>Agregar al carrito</Button>
-        )
+        setEvent(1)
     }
 
     //Función botón "Terminar compra"
@@ -61,19 +38,18 @@ function ItemDetail({itemDetail}) {
                     Descripción: {item.description}<br/>
                     <strong>Precio: {item.price}</strong>
                 </Card.Text>
-                {event !=='click' ?
+                {console.log(event)}
+                {event === 0 ?
                     <>
                         <ItemCount
-                            itemDetail={item}
+                            stock={item.stock}
+                            initial={1}
+                            price={item.price}
                             onAdd = {onAdd}
-                            onSub = {onSub}
                             quantity = {quantity}
                         /> 
-                        <Agregar/>
                     </>:
-                    <>
-                        <div> Cantidad: {quantity}</div>
-                        <div className="mt-3"><strong> Precio total: {quantity * item.price}</strong></div> 
+                    <> 
                         <Comprar />
                     </>
                 }

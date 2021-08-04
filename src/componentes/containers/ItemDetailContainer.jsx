@@ -7,7 +7,6 @@ import {getItem} from "../../getMocks";
 function ItemDetailContainer() {
 
     const {detailId} = useParams()
-    console.log(detailId)
 
     const [itemDetail, setItemDetail] = useState({})
 
@@ -19,8 +18,6 @@ function ItemDetailContainer() {
             },error => console.log(error))
             .catch(error => console.log('Un error:' + error))
     }, [detailId])
-
-    console.log(itemDetail)
 
     //Renderiza el Item Detail con sus props (estados y funciones)
 

@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 const Item = ({id, category, image, name, price})=> {
 
     return (
-        <Card style={{ width: '18rem' }} key={'item'+ id} className="mx-auto">
+        <Card style={{ width: '18rem' }} className="mx-auto">
             <Card.Img variant="top" src={image} />
             <Card.Body>
                 <Card.Title>{name}</Card.Title>

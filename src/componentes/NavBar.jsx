@@ -35,7 +35,6 @@ function NavBar() {
                     <Nav.Link as={Link} to="/" className="navbar__font">Home</Nav.Link>
                     <Nav.Link as={Link} to="/">Sobre nosotros</Nav.Link>
                 <NavDropdown title="Productos" id="collasible-nav-dropdown">
-                        {console.log(categoryList)}
                         {categoryList.map((category)=>(
                         <NavDropdown.Item key={category+"Key"} as={Link} to={"/category/"+category}>{capitalize(category)}</NavDropdown.Item>
                         ))}

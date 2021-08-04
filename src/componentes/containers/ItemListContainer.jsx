@@ -36,9 +36,6 @@ function ItemListContainer() {
     //     .then(res => console.log(res))
     // })
 
-    console.log(categoryId);
-    console.log(itemList);
-
     return (
         <CardGroup>
             <Row className="mx-auto">

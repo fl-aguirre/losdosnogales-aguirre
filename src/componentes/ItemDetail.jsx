@@ -6,17 +6,17 @@ import {Link} from 'react-router-dom'
 import {CartContext} from './context/CartContext';
 
 function ItemDetail({itemDetail}) {
-    
-    console.log(itemDetail)
 
     //Estado de la cantidad
     const [quantity, setQuantity] = useState(0);
 
     //Usar estado y función del contexto
-    const {cart, guardarCart} = useContext(CartContext)
+    const {guardarCart} = useContext(CartContext)
 
     //Función para guardar el contador (count) en el estado de cantidad (quantity) y el evento click
     const onAdd = (qy, item) =>{
+        alert("Has agregado un producto!")
+        guardarCart(item, qy)
         setQuantity(qy)
     }
 
@@ -37,11 +37,12 @@ function ItemDetail({itemDetail}) {
                             initial={1}
                             price={item.price}
                             onAdd = {onAdd}
+                            item = {item}
                         /> 
                     </>:
                     <>  <span> Cantidad: {quantity}</span><br/>
                         <div><strong> Precio total: {quantity * item.price}</strong></div>
-                        <Button className="mt-3" as={Link} size="sm" to="/cart" onClick={()=>guardarCart(item, quantity)}>Terminar compra</Button>
+                        <Button key={'btnDetail'+ item.id} className="mt-3" as={Link} size="sm" to="/cart" >Terminar compra</Button>
                     </>
                 }
             </Card.Body>

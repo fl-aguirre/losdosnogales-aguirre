@@ -12,7 +12,7 @@ export default function UseCartContext({children}) {
         console.log(valor)
         if (valor !== undefined){
             let index = cart.indexOf(valor)
-            setCart(cart.splice(index,1))
+            cart.splice(index,1)
             setCart([...cart, {item:it, quantity:qy}])
         }else{
             setCart([...cart, {item:it, quantity:qy}])
@@ -21,14 +21,11 @@ export default function UseCartContext({children}) {
 
     //Función para quitar item en carrito
     function quitarCart(it) {
-        let index = cart.indexOf(it)
-        console.log(it)
-        console.log(index)
-        setCart(cart.splice(index,1))
+        console.log(it) 
+        const newArray = cart.filter(i => i !== it)
+        setCart(newArray)
         console.log(cart)
     }
-
-    console.log(cart)
 
     //Agregar métodos removeItem, clear y verificar si está en carrito
  

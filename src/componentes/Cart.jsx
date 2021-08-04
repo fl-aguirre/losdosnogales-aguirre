@@ -1,9 +1,8 @@
-import {useContext, useEffect, useState} from "react";
+import {useContext} from "react";
 import {CartContext} from './context/CartContext';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import CardGroup from 'react-bootstrap/CardGroup';
-import {Link} from 'react-router-dom'
 
 
 function Cart() {
@@ -16,6 +15,8 @@ function Cart() {
             <h2 className="text-center">
                 Carrito de compras
             </h2>
+            {cart.length === 0 ?
+            <h3 className="text-center mt-5">Tu carrito está vacío</h3>:
             <CardGroup style={{ width:'50rem'}} className="mx-auto">
                 {cart.map((itemCart)=>(
                     <Card style={{ width:'15rem'}} className="mx-auto mt-5" key={'itemCart'+ itemCart.item.id}>
@@ -32,6 +33,7 @@ function Cart() {
                     </Card>
                 ))}
             </CardGroup>
+            }
         </div>
     )
 }

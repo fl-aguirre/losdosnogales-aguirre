@@ -1,8 +1,9 @@
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import ItemCount from './ItemCount';
-import {useState} from "react";
+import {useState, useContext} from "react";
 import {Link} from 'react-router-dom'
+import {CartContext} from './context/CartContext';
 
 function ItemDetail({itemDetail}) {
     
@@ -11,14 +12,12 @@ function ItemDetail({itemDetail}) {
     //Estado de la cantidad
     const [quantity, setQuantity] = useState(0);
 
-    //Estado del evento "click"
-    const [event, setEvent] = useState(0)
+    //Usar estado y función del contexto
+    const {cart, guardarCart} = useContext(CartContext)
 
     //Función para guardar el contador (count) en el estado de cantidad (quantity) y el evento click
-    const onAdd = (qy) =>{
+    const onAdd = (qy, item) =>{
         setQuantity(qy)
-        alert('Has agregado un producto!')
-        setEvent(1)
     }
 
     //Renderiza el item con sus detalles
@@ -31,19 +30,18 @@ function ItemDetail({itemDetail}) {
                     Descripción: {item.description}<br/>
                     <strong>Precio: {item.price}</strong>
                 </Card.Text>
-                {console.log(event)}
-                {event === 0 ?
+                {quantity === 0 ?
                     <>
                         <ItemCount
                             stock={item.stock}
                             initial={1}
                             price={item.price}
                             onAdd = {onAdd}
-                            quantity = {quantity}
                         /> 
                     </>:
-                    <> 
-                        <Button as={Link} size="sm" to="/cart">Terminar compra</Button>
+                    <>  <span> Cantidad: {quantity}</span><br/>
+                        <div><strong> Precio total: {quantity * item.price}</strong></div>
+                        <Button className="mt-3" as={Link} size="sm" to="/cart" onClick={()=>guardarCart(item, quantity)}>Terminar compra</Button>
                     </>
                 }
             </Card.Body>

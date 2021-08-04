@@ -1,7 +1,7 @@
 import {useState} from "react";
 import Button from 'react-bootstrap/Button';
 
-function ItemCount({stock, initial, price, onAdd, quantity, event}) {
+function ItemCount({stock, initial, price, onAdd}) {
 
     //Estado del contador (suma y resta)
     const [ count, setCount ] = useState( initial )
@@ -29,7 +29,7 @@ function ItemCount({stock, initial, price, onAdd, quantity, event}) {
             <Button size="sm" onClick={restar}>-</Button>
             <span> Cantidad: {count}</span><br/>
             <div className="mt-3"><strong> Precio total: {count * price}</strong></div>
-            <Button className="mt-3" size="sm" onClick={()=> onAdd(count)}>Agregar al carrito</Button>
+            <Button className="mt-3" size="sm" onClick={()=> onAdd(count)}>Seleccionar cantidad</Button>
         </div>
     )
 }

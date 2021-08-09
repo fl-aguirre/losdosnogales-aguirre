@@ -8,12 +8,18 @@ export default function UseCartContext({children}) {
 
     //Función para guardar item en carrito
     function guardarCart(it, qy) {
-        let valor = cart.find(element => element.item.id === it.id)
-        console.log(valor)
+        const valor = cart.find(element => element.item.id === it.id)
         if (valor !== undefined){
-            let index = cart.indexOf(valor)
-            cart.splice(index,1)
-            setCart([...cart, {item:it, quantity:qy}])
+            const index = cart.indexOf(valor);
+            const oldQy = cart[index].quantity;
+            const stockQy = cart[index].item.stock;
+            if ((oldQy+qy) >= stockQy){
+                cart.splice(index,1)
+                setCart([...cart, {item:it, quantity:stockQy}])
+            }else{
+                cart.splice(index,1)
+                setCart([...cart, {item:it, quantity:qy + oldQy}])
+            }
         }else{
             setCart([...cart, {item:it, quantity:qy}])
         }
@@ -27,13 +33,16 @@ export default function UseCartContext({children}) {
         console.log(cart)
     }
 
-    //Agregar métodos removeItem, clear y verificar si está en carrito
+    function clear() {
+        setCart([])
+    }
  
     return(
         <CartContext.Provider value={{
             cart, 
             guardarCart,
-            quitarCart
+            quitarCart,
+            clear
         }}>
             {children}
         </CartContext.Provider>

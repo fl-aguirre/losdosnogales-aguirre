@@ -1,6 +1,7 @@
 import {useState, useEffect} from "react";
 import {useParams} from 'react-router-dom'
 import CardGroup from 'react-bootstrap/CardGroup';
+import Spinner from 'react-bootstrap/Spinner';
 import Row from 'react-bootstrap/Row';
 import ItemList from "../ItemList";
 import {getItem} from "../../getMocks"
@@ -11,12 +12,14 @@ function ItemListContainer() {
     const {categoryId} = useParams()
 
     const [itemList, setItemList] = useState([]);
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         if (categoryId === undefined){
             getItem()
             .then((respuesta)=>{
                 setItemList(respuesta)
+                setLoading(true)
             },error => console.log(error))
             .catch(error => console.log('Un error:' + error))
             // .finally(console.log('Se ejecuta igual'))
@@ -24,6 +27,7 @@ function ItemListContainer() {
             getItem()
             .then((respuesta)=>{
                 setItemList(respuesta.filter(item => item.category===categoryId))
+                setLoading(true)
             },error => console.log(error))
             .catch(error => console.log('Un error:' + error))
         }
@@ -37,13 +41,15 @@ function ItemListContainer() {
     // })
 
     return (
-        <CardGroup>
-            <Row className="mx-auto">
-                <ItemList 
-                    list={itemList}
-                />
-            </Row>
-        </CardGroup>
+        !loading ? <Spinner animation="border"/> 
+                    :
+                    <CardGroup>
+                        <Row className="mx-auto">
+                            <ItemList 
+                                list={itemList}
+                            />
+                        </Row>
+                    </CardGroup>
     )
 
 }

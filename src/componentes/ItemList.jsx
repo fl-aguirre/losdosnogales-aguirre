@@ -5,7 +5,6 @@ const ItemList = ({list})=> {
         <Item
             key={'item'+ item.id} 
             id={item.id}
-            category={item.category}
             image={item.image}
             name={item.name}
             price={item.price}

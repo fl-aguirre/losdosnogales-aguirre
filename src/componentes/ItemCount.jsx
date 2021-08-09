@@ -1,25 +1,32 @@
 import {useState} from "react";
 import Button from 'react-bootstrap/Button';
 
-function ItemCount({stock, initial, price, onAdd, item}) {
+function ItemCount({stock, initial, price, onAdd, item, cart}) {
 
     //Estado del contador (suma y resta)
     const [ count, setCount ] = useState( initial )
-    
+
     //Función para sumar (guarda en count)
     const sumar = () => {
         setCount(count + 1)
-        if (count === stock) {
-            setCount(stock)
+        const valor = cart.find(element => element.item.id === item.id)
+        if (valor !== undefined){
+            const index = cart.indexOf(valor);
+            const qy = cart[index].quantity;
+            if ((count + qy) >= stock){ //Se pone >= porque el valor initial es 1 y me rompe el contador si se completa el stock
+                setCount(count)
+                alert("No hay más stock!")
+            }
+        }else if (count === stock){
+            setCount(count)
             alert("No hay más stock!")
         }
     }
 
     //Función para restar (guarda en count)
     const restar = () => {
-        setCount(count - 1)
-        if (count === 1) {
-            setCount(1)  
+        if (count > initial) {
+            setCount(count - 1)  
         }
     }
 

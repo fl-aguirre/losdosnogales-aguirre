@@ -1,15 +1,17 @@
-import {useState, useEffect} from "react";
-import {Link} from 'react-router-dom'
+import {useState, useEffect, useContext} from "react";
+import {Link} from 'react-router-dom';
 import CartWidget from './CartWidget';
 import logo from '../logo.jpg';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import {getItem} from "../getMocks";
+import {CartContext} from './context/CartContext';
 
 function NavBar() {
 
     const [categoryList, setCategoryList] = useState([]);
+    const {cart} = useContext(CartContext)
 
     useEffect(() => {
         getItem()
@@ -41,7 +43,8 @@ function NavBar() {
                 </NavDropdown>
                     <Nav.Link as={Link} to="/">Contáctenos</Nav.Link>
                 </Nav>
-                <CartWidget/>
+                {/* Ocultar CartWidget si no hay items agregados al carrito */}
+                {cart.length > 0 ? <CartWidget/> : <></>}
             </Navbar.Collapse>
         </Navbar>
     )

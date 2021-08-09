@@ -11,7 +11,7 @@ function ItemDetail({itemDetail}) {
     const [quantity, setQuantity] = useState(0);
 
     //Usar estado y función del contexto
-    const {guardarCart} = useContext(CartContext)
+    const {cart, guardarCart} = useContext(CartContext)
 
     //Función para guardar el contador (count) en el estado de cantidad (quantity) y el evento click
     const onAdd = (qy, item) =>{
@@ -20,8 +20,9 @@ function ItemDetail({itemDetail}) {
         setQuantity(qy)
     }
 
+
     //Renderiza el item con sus detalles
-    return itemDetail.map((item) => (
+    return itemDetail.map((item) => ( //Este map me parece que es al pedo, porque solo filtra uno
         <Card style={{ width: '30rem' }} className="mx-auto mt-5" key={'itemDetail'+ item.id}>
             <Card.Img variant="top" src={item.image} />
             <Card.Body>
@@ -38,6 +39,7 @@ function ItemDetail({itemDetail}) {
                             price={item.price}
                             onAdd = {onAdd}
                             item = {item}
+                            cart = {cart}
                         /> 
                     </>:
                     <>  <span> Cantidad: {quantity}</span><br/>

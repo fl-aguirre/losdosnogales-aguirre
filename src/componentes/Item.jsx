@@ -1,8 +1,9 @@
+import {memo} from "react";
 import {Link} from 'react-router-dom'
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 
-const Item = ({id, category, image, name, price})=> {
+const Item = memo(({id, image, name, price})=> {
 
     return (
         <Card style={{ width: '18rem' }} className="mx-auto">
@@ -16,6 +17,6 @@ const Item = ({id, category, image, name, price})=> {
             </Card.Body>
         </Card>
     )
-}
+}, (anterior,posterior)=> anterior.id === posterior.id) // Condición de la función memo. Solo es ilustrativa. Evita que se re-renderice todo ante cambios de estado
 
 export default Item

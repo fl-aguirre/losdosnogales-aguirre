@@ -5,7 +5,7 @@ import {useState, useContext} from "react";
 import {Link} from 'react-router-dom'
 import {CartContext} from './context/CartContext';
 
-function ItemDetail({itemDetail}) {
+function ItemDetail({item}) {
 
     //Estado de la cantidad
     const [quantity, setQuantity] = useState(0);
@@ -22,7 +22,7 @@ function ItemDetail({itemDetail}) {
 
 
     //Renderiza el item con sus detalles
-    return itemDetail.map((item) => ( //Este map me parece que es al pedo, porque solo filtra uno
+    return ( //Este map me parece que es al pedo, porque solo filtra uno
         <Card style={{ width: '30rem' }} className="mx-auto mt-5" key={'itemDetail'+ item.id}>
             <Card.Img variant="top" src={item.image} />
             <Card.Body>
@@ -49,7 +49,7 @@ function ItemDetail({itemDetail}) {
                 }
             </Card.Body>
         </Card>
-    ));
+    );
 }
 
 export default ItemDetail

@@ -4,7 +4,8 @@ import CardGroup from 'react-bootstrap/CardGroup';
 import Spinner from 'react-bootstrap/Spinner';
 import Row from 'react-bootstrap/Row';
 import ItemList from "../ItemList";
-import {getItem} from "../../getMocks"
+import {getItem} from "../servicios/getMocks";
+import { getFirestore } from "../servicios/firebaseService";
 
 
 function ItemListContainer() {
@@ -15,18 +16,20 @@ function ItemListContainer() {
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
+        const dbQuery = getFirestore()
         if (categoryId === undefined){
-            getItem()
+            dbQuery.collection('items').where('price', '>=', 100).get()
             .then((respuesta)=>{
-                setItemList(respuesta)
+                console.log(respuesta)
+                setItemList(respuesta.docs.map(item => ({...item.data(), id: item.id} )))
                 setLoading(true)
             },error => console.log(error))
             .catch(error => console.log('Un error:' + error))
             // .finally(console.log('Se ejecuta igual'))
         }else {
-            getItem()
+            dbQuery.collection('items').where('category', '==', categoryId).get()
             .then((respuesta)=>{
-                setItemList(respuesta.filter(item => item.category===categoryId))
+                setItemList(respuesta.docs.map(item => ({...item.data(), id: item.id} )))
                 setLoading(true)
             },error => console.log(error))
             .catch(error => console.log('Un error:' + error))

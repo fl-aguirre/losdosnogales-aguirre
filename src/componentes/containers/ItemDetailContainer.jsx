@@ -1,7 +1,8 @@
 import {useState, useEffect} from "react";
 import {useParams} from 'react-router-dom';
 import ItemDetail from "../ItemDetail";
-import {getItem} from "../../getMocks";
+import {getItem} from "../servicios/getMocks";
+import { getFirestore } from "../servicios/firebaseService";
 
 
 function ItemDetailContainer() {
@@ -12,12 +13,15 @@ function ItemDetailContainer() {
 
     //Al resolver la promesa, devuelve el primer item de la lista y lo guarda en estado "itemDetail"
     useEffect(() => {
-        getItem()
-            .then((respuesta)=>{
-                setItemDetail(respuesta.filter( item => item.id === parseInt(detailId)))
+        const dbQuery = getFirestore()
+        dbQuery.collection('items').doc(detailId).get()
+            .then(respuesta => {
+                setItemDetail({id: respuesta.id, ...respuesta.data()})
             },error => console.log(error))
             .catch(error => console.log('Un error:' + error))
     }, [detailId])
+
+    console.log(itemDetail)
 
     //Renderiza el Item Detail con sus props (estados y funciones)
 
@@ -26,7 +30,7 @@ function ItemDetailContainer() {
     }else {
         return (
             <ItemDetail
-                itemDetail = {itemDetail}
+                item = {itemDetail}
             />
         )
     }

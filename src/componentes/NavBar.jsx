@@ -5,7 +5,7 @@ import logo from '../logo.jpg';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import {getItem} from "../getMocks";
+import {getItem} from "../componentes/servicios/getMocks.js";
 import {CartContext} from './context/CartContext';
 
 function NavBar() {

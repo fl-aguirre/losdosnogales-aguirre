@@ -1,4 +1,4 @@
-import nueces1 from './images/nueces1.jpeg';
+// import nueces1 from './images/nueces1.jpeg';
 
 //Lista de productos (base de datos)
 export const productsList = [
@@ -9,7 +9,7 @@ export const productsList = [
         description: 'Nueces confitadas rellenas de dulce de leche y cubiertas con fondant.', 
         price: 100, 
         stock: 3, 
-        image: nueces1},  
+        image: "https://http2.mlstatic.com/D_NQ_NP_919308-MLA45261948066_032021-O.jpg"},  
     {
         id:2, 
         name: 'Nueces de chocolate',

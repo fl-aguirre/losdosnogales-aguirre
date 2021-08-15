@@ -12,17 +12,17 @@ function CartWidget() {
     const {cart} = useContext(CartContext)
 
     //Función para calcular la cantidad total de items
-    let cantidadTotal = 0;
     function calcularCantidad(cart) {
+        let cantidadTotal = 0;
         for (let itemCart of cart) {
             cantidadTotal = cantidadTotal + itemCart.quantity;
         }
+        return cantidadTotal
     }
 
     return (
         <Button as={Link} to="/cart">
-            {calcularCantidad(cart)}
-            <FontAwesomeIcon icon={faShoppingCart} size="lg"/><Badge>{cantidadTotal}</Badge>
+            <FontAwesomeIcon icon={faShoppingCart} size="lg"/><Badge>{calcularCantidad(cart)}</Badge>
         </Button>
     )
 }

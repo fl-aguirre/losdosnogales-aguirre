@@ -4,7 +4,6 @@ import CardGroup from 'react-bootstrap/CardGroup';
 import Spinner from 'react-bootstrap/Spinner';
 import Row from 'react-bootstrap/Row';
 import ItemList from "../ItemList";
-import {getItem} from "../servicios/getMocks";
 import { getFirestore } from "../servicios/firebaseService";
 
 

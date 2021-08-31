@@ -3,8 +3,8 @@ import Button from 'react-bootstrap/Button';
 
 function ItemCount({stock, initial, price, onAdd, item, cart}) {
 
-    //Estado del contador (suma y resta)
-    const [ count, setCount ] = useState( initial )
+    const [ count, setCount ] = useState( initial ) //Estado del contador (suma y resta)
+    const [ alerta, setAlerta ] = useState(false) //Estado para la alerta de stock
 
     //Función para sumar (guarda en count)
     const sumar = () => {
@@ -15,16 +15,17 @@ function ItemCount({stock, initial, price, onAdd, item, cart}) {
             const qy = cart[index].quantity;
             if ((count + qy) >= stock){ //Se pone >= porque el valor initial es 1 y me rompe el contador si se completa el stock
                 setCount(count)
-                alert("No hay más stock!")
+                setAlerta(true)
             }
         }else if (count === stock){
             setCount(count)
-            alert("No hay más stock!")
+            setAlerta(true)
         }
     }
 
     //Función para restar (guarda en count)
     const restar = () => {
+        setAlerta(false)
         if (count > initial) {
             setCount(count - 1)  
         }
@@ -34,9 +35,20 @@ function ItemCount({stock, initial, price, onAdd, item, cart}) {
         <div className="mb-3">
             <Button size="sm" onClick={sumar}>+</Button>
             <Button size="sm" onClick={restar}>-</Button>
-            <span> Cantidad: {count}</span><br/>
-            <div className="mt-3"><strong> Precio total: {count * price}</strong></div>
-            <Button className="mt-3" size="sm" onClick={()=> onAdd(count, item)}>Seleccionar cantidad</Button>
+            {stock === 0 ? 
+            <div>No hay stock</div>
+            :
+            <>
+                <div> Cantidad: {count}</div>
+                {alerta ? <div>No hay stock</div>:<></>}
+                <div className="mt-3">
+                    <strong> Precio total: {count * price}</strong>
+                </div>
+                <div className="text-center mt-3">
+                    <Button  size="sm" onClick={()=> onAdd(count, item)}>Seleccionar cantidad</Button>
+                </div>
+            </>
+            }
         </div>
     )
 }

@@ -5,8 +5,8 @@ import logo from '../logo.jpg';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import {getItem} from "../componentes/servicios/getMocks.js";
 import {CartContext} from './context/CartContext';
+import { getFirestore } from "./servicios/firebaseService";
 
 function NavBar() {
 
@@ -14,10 +14,13 @@ function NavBar() {
     const {cart} = useContext(CartContext)
 
     useEffect(() => {
-        getItem()
+        const dbQuery = getFirestore()
+        dbQuery.collection('items').get()
             .then((respuesta)=>{
-                let array = respuesta.map(item=>(item.category))
-                setCategoryList(array.filter((item,index)=>(array.indexOf(item) === index)))
+                let itemsArray = respuesta.docs.map(item => ({...item.data()} ))
+                let itemsCategory = itemsArray.map(item => item.category)
+                setCategoryList(itemsCategory.filter((item,index)=>(itemsCategory.indexOf(item) === index)))
+                    
             },error => console.log(error))
             .catch(error => console.log('Un error:' + error))
     }, [])
@@ -43,7 +46,6 @@ function NavBar() {
                 </NavDropdown>
                     <Nav.Link as={Link} to="/">Contáctenos</Nav.Link>
                 </Nav>
-                {/* Ocultar CartWidget si no hay items agregados al carrito */}
                 {cart.length > 0 ? <CartWidget/> : <></>}
             </Navbar.Collapse>
         </Navbar>

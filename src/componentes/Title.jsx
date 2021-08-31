@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Titulo({nombre}) { //Funcion hijo
+function Titulo({nombre}) {
     return (
         <div className="title__container">
             <h1 className="title">{nombre}</h1>
@@ -8,7 +8,7 @@ function Titulo({nombre}) { //Funcion hijo
     )
 }
 
-function Title() { //Función padre. Es la que recibe los parámetros.
+function Title() {
     return (
         <>
             <Titulo 

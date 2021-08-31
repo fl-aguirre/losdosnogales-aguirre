@@ -1,41 +1,43 @@
 import {useState, useContext} from "react";
-import {Link} from 'react-router-dom';
 import {CartContext} from './context/CartContext';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-import CardGroup from 'react-bootstrap/CardGroup';
 import { getFirestore } from "./servicios/firebaseService";
-import firebase from 'firebase'
-import Badge from 'react-bootstrap/Badge';
-
+import firebase from 'firebase';
+import CartItem from "./CartItem";
+import Button from 'react-bootstrap/Button';
+import CartForm from './CartForm';
+import Checkout from './Checkout';
+import {Link} from 'react-router-dom';
 
 function Cart() {
 
-    const {cart, quitarCart, clear} = useContext(CartContext)
+    const {cart, quitarCart, clear, calcularPrecio} = useContext(CartContext)
 
-    //Función para calcular el precio total
-    function calcularPrecio(cart) {
-        let precioTotal = 0;
-        for (let itemCart of cart) {
-            precioTotal = precioTotal + (itemCart.item.price*itemCart.quantity);
-        }
-        return precioTotal
-    }
+    console.log(cart)
 
-    //Estado para datos del comprador
-    const [buyer, setBuyer] = useState(initialState)
+    //Estados
+    const [buyer, setBuyer] = useState(initialState) //Datos del comprador
+    const [purchase, setPurchase] = useState(false) //Confirmación de compra
+    const [id, setId] = useState('') //Guardar id de compra
 
-    //Estado para confirmación de compra
-    const [purchase, setPurchase] = useState(false)
-
-    //Estado para guardar id de la compra
-    const [id, setId] = useState('')
+    //Control del formulario (modal)
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     //Tomar los nombres, precios, ids y cantidades de los items del carrito
     const returnItems = (cart) => {
         const items = []
         cart.forEach(element => {
-            items.push({id: element.item.id, title: element.item.name, price: element.item.price, stock: element.item.stock, quantity: element.quantity})
+            items.push(
+            {
+                id: element.item.id, 
+                title: element.item.name,
+                description: element.item.description,
+                image: element.item.image, 
+                price: element.item.price, 
+                stock: element.item.stock, 
+                quantity: element.quantity, 
+            })
         })
         return items
     }
@@ -45,7 +47,8 @@ function Cart() {
         buyer, 
         items: returnItems(cart),
         date: firebase.firestore.Timestamp.fromDate(new Date()),
-        precioTotal: calcularPrecio(cart)
+        precioTotal: calcularPrecio(cart),
+        confirm: purchase,
     }
 
     //Manejador del cambio en formulario. Setea el estado del comprador
@@ -67,82 +70,49 @@ function Cart() {
         })
         db.collection('order').add(order)
 
-        // db.collection('order').add(order) //Agregar una orden
-        // db.collection('order').doc('h0sdf1HKhUcMe0JJ08jw').update(order) //Actualizar todo
-        // db.collection('order').doc('h0sdf1HKhUcMe0JJ08jw').update({ //Actualizar sólo items con un array vacío
-        //     item: []
-        // })
         .then(respuesta=> {
             console.log(respuesta)
-            setId(respuesta.id) //Devuelve el ID de la compra al user
-            })
+            setId(respuesta.id) //Devuelve el ID de la compra al user    
+        })
         .then(setPurchase(true))
-        .then(clear())
         .catch(error => console.log(error))
-        // .finally(()=>)
-
-        // const batch = db.batch()     //Método para anidar varias consultas al firestore
-        // batch.update(docPrimero, {field:'prueba'})
-        // batch.set(docSegundo, {field:'nuevaPrueba'})
-        // batch.commit().then(resp => resp)
     }
 
-    console.log(order)
+    //Limpiar carrito y local storage
+    const cleanCart = () => {
+        localStorage.clear();
+        clear();
+    }
 
     return (
-        <div>{purchase ? 
-            <>
-                <h2 className="text-center">
-                Su compra se ha realizado exitosamente!
-                </h2>
-                <h3 className="text-center mt-5">ID de su compra: {id}</h3>
-            </>
+        <div>{purchase ?
+            <Checkout 
+                id={id}
+                order={order}
+                cleanCart={cleanCart}
+            /> 
             :
             <>
-                <h2 className="text-center">
-                    Carrito de compras
-                </h2>
-                {cart.length === 0  ?
-                <div><h3 className="text-center mt-5">Tu carrito está vacío</h3>
-                    <Button size="sm" as={Link} to="/">Volver al home</Button>
-                </div>:
-                <>
-                    <CardGroup style={{ width:'30rem'}} className="mx-auto">
-                        {cart.map((itemCart)=>(
-                            <Card style={{ width:'15rem'}} className="mx-auto mt-5" key={'itemCart'+ itemCart.item.id}>
-                                <Card.Img variant="top" src={itemCart.item.image} width="200" />
-                                <Card.Body>
-                                    <Card.Title>{itemCart.item.name}</Card.Title>
-                                    <Card.Text>
-                                        Descripción: {itemCart.item.description}<br/>
-                                        <strong>Precio: {itemCart.item.price}</strong><br/>
-                                        <strong>Cantidad: {itemCart.quantity}</strong><br/>
-                                    </Card.Text>
-                                    <Button size="sm" onClick={()=>quitarCart(itemCart)}>Quitar producto</Button>
-                                </Card.Body>
-                            </Card>
-                        ))}
-                    </CardGroup>
+                <CartItem
+                    cart={cart}
+                    quitarCart={quitarCart}
+                    calcularPrecio={calcularPrecio}
+                />
+                <div className="text-center">
+                    <Button size="lg" onClick={(cleanCart)}>Limpiar carrito</Button>
+                    {cart.length !== 0 ?
+                    <Button size="lg" variant="primary" onClick={handleShow}>Realizar compra</Button>
+                    :
+                    <Button size="lg" as={Link} to="/">Volver al home</Button>}
+                </div>
+                <CartForm
+                    handlerChange={handlerChange}
+                    handlerSubmit={handlerSubmit}
+                    buyer={buyer}
+                    show={show}
+                    handleClose={handleClose}
 
-                    <div><strong>Precio total: {calcularPrecio(cart)}</strong></div>
-                    <Button size="sm" onClick={(clear)}>Limpiar carrito</Button>
-
-                    <form
-                    onSubmit={handlerSubmit} className="mt-5 text-center"
-                    >
-                        <input type="texto" placeholder="Nombre" name="name" value={buyer.name} onChange={handlerChange}></input><br/>
-                        <input type="texto" placeholder="Teléfono" name="phone" value={buyer.phone} onChange={handlerChange}></input><br/>
-                        <input type="email" placeholder="Email" name="email" value={buyer.email} onChange={handlerChange}></input><br/>
-                        <input type="email" placeholder="Confirmar email" name="validateEmail" value={buyer.validateEmail} onChange={handlerChange}></input><br/>
-                        {buyer.email === buyer.validateEmail && buyer.email !== "" ?
-                        <>
-                            <Button type="submit">Enviar</Button>
-                        </>
-                        :
-                        <Badge>Emails deben coincidir</Badge>}
-                    </form>
-                </>
-                }
+                />
             </>
         }</div>
     )

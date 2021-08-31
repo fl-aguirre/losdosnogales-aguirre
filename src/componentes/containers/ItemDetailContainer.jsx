@@ -1,6 +1,7 @@
 import {useState, useEffect} from "react";
 import {useParams} from 'react-router-dom';
 import ItemDetail from "../ItemDetail";
+import LoadSpinner from "../LoadSpinner";
 import { getFirestore } from "../servicios/firebaseService";
 
 
@@ -20,17 +21,21 @@ function ItemDetailContainer() {
             .catch(error => console.log('Un error:' + error))
     }, [detailId])
 
-    console.log(itemDetail)
-
     //Renderiza el Item Detail con sus props (estados y funciones)
 
     if (Object.keys(itemDetail).length === 0){
-        return null
+        return <LoadSpinner/>
     }else {
         return (
-            <ItemDetail
-                item = {itemDetail}
-            />
+            <section>
+                {itemDetail.name === undefined ?
+                <h2 className="text-center">Ups! El producto no existe!</h2>
+                :
+                <ItemDetail
+                    item = {itemDetail}
+                />
+                }
+            </section>
         )
     }
 }

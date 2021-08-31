@@ -1,17 +1,32 @@
+* {
+  margin:0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  height: 60rem;
+  font-size: 62.5%;
+}
+
+/* Título de la web */
 .title__container {
-  margin: 50px;
+  margin: 3rem;
 }
 
 .title {
+  font-size: 2.5rem;
   text-align: center;
-  font-size: 30px;
+  font-style: italic;
 }
 
+/* Barra de navegación */
 .navbar {
   display: flex;
   justify-content: space-evenly;
   background-color:#fbfbdc;
   height: 150px;
+  font-size: 1.25rem;
   font-weight: bolder;
   color: #57825c;
 }
@@ -20,37 +35,127 @@
   width: 130px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.dropdown-item {
+  font-size: 1.25rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Spinne */
+.spinner{
+  position: relative;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.spinner-border {
+  position: absolute;
+  z-index: 1031;
+  top: 50%;
+  right: 50%;
 }
 
-.App-link {
-  color: #61dafb;
+/* Imágenes */
+img {
+  border-radius: 1rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Catálogo de productos */
+.card__style__products {
+  padding: 20px;
+  width: 25rem;
+}
+
+.card__style__products .card-title {
+  font-size: 1.5rem;
+}
+
+.card__style__products div {
+  font-size: 1.25rem;
+}
+
+.card__style__products a {
+  font-size: 1.2rem;
+}
+
+/* Detalles de productos */
+.card__style__detail {
+  padding: 20px;
+  width: 30rem;
+}
+
+.card__style__detail .card-title {
+  font-size: 1.5rem;
+}
+
+.card__style__detail div {
+  font-size: 1.25rem;
+}
+
+.card__style__detail .btn {
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+/* Carrito de compras */
+.card__style__cart {
+  padding: 20px;
+  width: 30rem;
+}
+
+.card__style__cart .card-title {
+  font-size: 1.5rem;
+}
+
+.card__style__cart div {
+  font-size: 1.25rem;
+}
+
+.card__style__cart .btn {
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+/* Detalles de la compra */
+.card__style__purchase {
+  padding: 20px;
+  width: 30rem;
+}
+
+.card__style__purchase .card-title {
+  font-size: 2rem;
+  text-align: center;
+}
+
+.card__style__purchase div {
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+/* Precio total */
+.priceContainer {
+  margin: 30px;
+}
+
+.priceContainer h3 {
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin: 10px;
+}
+
+/* Subtítulos */
+.subTitle {
+  padding: 20px;
+  text-align: center;
+  font-size: 2.5rem;
+}
+
+/* Formulario */
+#myForm{
+  font-size: 1.25rem;
+}
+
+#myForm label{
+  margin-top: 1rem;
+}
+
+#myForm input{
+  font-size: 1.25rem;
 }

@@ -41,7 +41,7 @@ Firebase para la solución de los datos empleados en la aplicación.
 
 ## Aplicación en funcionamiento
 
-[Los dos nogales en funcionamiento](https://github.com/fl-aguirre/losdosnogales-aguirre/blob/main/losdosnogales-funcionamiento.gif)
+![Los dos nogales en funcionamiento](https://github.com/fl-aguirre/losdosnogales-aguirre/blob/main/losdosnogales-funcionamiento.gif)
 
 ### Autor
 
